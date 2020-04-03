@@ -1,0 +1,18 @@
+{
+  "Print to console": {
+    "prefix": "lg",
+    "body": ["console.log($1)"],
+    "description": "Log output to console"
+  },
+  "React Function Component": {
+    "prefix": "rh",
+    "body": [
+      "import React from 'react'",
+      "",
+      "export const $1 = () => {",
+      "\t\treturn ($2);",
+      "}"
+    ],
+    "description": "React Function Component"
+  }
+}
