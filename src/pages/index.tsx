@@ -66,15 +66,17 @@ const JobDetails = styled.div`
     color: var(--dark-cyan);
     font-size: 14px;
     font-weight: bold;
+    margin-top: 20px;
   }
 
   > * {
-    margin: 2px 0px;
+    margin: 10px 0px;
   }
   > footer {
     color: hsl(180, 8%, 52%);
     font-size: 14px;
     font-weight: 300;
+    margin-bottom: 20px;
 
     > span:not(:first-child)::before {
       content: "•";
@@ -111,7 +113,10 @@ const Tag = styled.span`
   height: 25px;
   line-height: 20px;
   font-size: smaller;
-  margin-right: 5px;
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
 `;
 
 const NewTag = styled(Tag)`
