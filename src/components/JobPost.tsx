@@ -40,6 +40,7 @@ const JobDetails = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  cursor: pointer;
 
   header {
     color: var(--dark-cyan);
@@ -138,25 +139,37 @@ const FilterTag = styled.span`
   cursor: pointer;
 `;
 
-export type JobPostProps = React.AllHTMLAttributes<any> & {
-  post: {
-    companyName: string;
-    id: string | number;
-    companyLogo: any;
-    jobTitle: string;
-    postedOn: string;
-    workingHours: string;
-    jobLocation: string;
-    keywords: string[];
-    featured: boolean;
-    new: boolean;
-  };
+type Post = {
+  companyName: string;
+  id: string | number;
+  companyLogo: any;
+  jobTitle: string;
+  postedOn: string;
+  workingHours: string;
+  jobLocation: string;
+  keywords: string[];
+  featured: boolean;
+  new: boolean;
 };
 
-const JobPost: React.FC<JobPostProps> = ({ post }) => {
+export type JobPostProps = React.AllHTMLAttributes<any> & {
+  post: Post;
+  onOpenClick?: () => {} | any;
+  onFilterClick?: () => {} | any;
+};
+
+const JobPost: React.FC<JobPostProps> = ({
+  post,
+  onOpenClick,
+  onFilterClick,
+}) => {
   return (
     <JobPostDiv key={post.id} className={post.featured ? "featured" : ""}>
-      <JobDetails>
+      <JobDetails
+        onClick={() => {
+          onOpenClick(post);
+        }}
+      >
         <Logo src={post.companyLogo} />
         <header>
           <CompanyName>{post.companyName}</CompanyName>
@@ -172,7 +185,9 @@ const JobPost: React.FC<JobPostProps> = ({ post }) => {
       </JobDetails>
       <JobFilters>
         {post.keywords.map((keyword: string) => (
-          <FilterTag key={keyword}>{keyword}</FilterTag>
+          <FilterTag onClick={() => onFilterClick(keyword)} key={keyword}>
+            {keyword}
+          </FilterTag>
         ))}
       </JobFilters>
     </JobPostDiv>

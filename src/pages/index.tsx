@@ -57,7 +57,12 @@ export const Index = () => {
         {Array(10)
           .fill(true)
           .map((_, i) => (
-            <JobPost key={i} post={jobPost} />
+            <JobPost
+              onFilterClick={console.log}
+              onOpenClick={console.log}
+              key={i}
+              post={jobPost}
+            />
           ))}
       </Main>
     </AppContainer>
