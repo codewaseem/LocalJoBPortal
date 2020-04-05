@@ -4,6 +4,20 @@ import styled from "@emotion/styled";
 import bgImage from "../images/bg-header-mobile.svg";
 import bgImageDesktop from "../images/bg-header-desktop.svg";
 import jobLogo from "../images/insure.svg";
+import JobPost, { JobPostProps } from "../components/JobPost";
+
+const jobPost = {
+  companyName: "Loop Studios",
+  id: "id",
+  companyLogo: jobLogo,
+  jobTitle: "Software Engineer",
+  postedOn: "1d ago",
+  workingHours: "Full Time",
+  jobLocation: "USA only",
+  keywords: ["JavaScript", "CSS", "HTML", "TypeScript"],
+  featured: true,
+  new: true,
+};
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -30,143 +44,6 @@ const Main = styled.main`
   }
 `;
 
-const JobPost = styled.div`
-  display: flex;
-  position: relative;
-  min-height: 175px;
-  max-width: 960px;
-  margin: auto;
-  background: white;
-  padding: 25px;
-  flex-wrap: wrap;
-  --job-item-width: 100%;
-  --separator: 1px;
-  --first-div-width: 100%;
-  border-radius: 5px;
-  box-shadow: 3px 5px 25px rgba(0, 0, 0, 0.2);
-
-  > :first-of-type {
-    max-width: var(--first-div-width);
-    border-bottom: var(--separator) solid var(--gray);
-  }
-
-  &.featured {
-    border-left: 4px solid var(--dark-cyan);
-  }
-
-  > * {
-    flex: 1 0 var(--job-item-width);
-  }
-
-  @media (min-width: 600px) {
-    --job-item-width: 50%;
-    --separator: 0px;
-    --first-div-width: max-content;
-  }
-`;
-
-const JobDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-  header {
-    color: var(--dark-cyan);
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 20px;
-  }
-
-  > * {
-    margin: 10px 0px;
-  }
-  > footer {
-    color: hsl(180, 8%, 52%);
-    font-size: 14px;
-    font-weight: 300;
-    margin-bottom: 20px;
-
-    > span:not(:first-of-type)::before {
-      content: "•";
-      display: inline-block;
-      margin: auto 10px;
-      color: var(--gray);
-    }
-  }
-`;
-
-const JobFilters = styled.div`
-  margin: 10px auto;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-around;
-
-  > * {
-    margin: 5px;
-  }
-
-  @media (min-width: 600px) {
-    justify-content: flex-end;
-  }
-`;
-
-const Logo = styled.img`
-  width: 50px;
-  position: absolute;
-  top: -25px;
-`;
-
-const CompanyName = styled.span`
-  display: inline-block;
-  margin-right: 20px;
-`;
-
-const Title = styled.h3`
-  color: var(--very-dark-gray-cyan);
-`;
-
-const Tag = styled.span`
-  display: inline-block;
-  text-transform: uppercase;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 15px;
-  height: 25px;
-  line-height: 20px;
-  font-size: smaller;
-
-  &:not(:last-child) {
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
-`;
-
-const NewTag = styled(Tag)`
-  background: var(--dark-cyan);
-  ::after {
-    content: "NEW!";
-  }
-`;
-
-const FeaturedTag = styled(Tag)`
-  background: var(--very-dark-gray-cyan);
-  ::after {
-    content: "featured";
-  }
-`;
-
-const FilterTags = styled.span`
-  display: inline-block;
-  padding: 10px;
-  border-radius: 5px;
-  line-height: 20px;
-  font-size: smaller;
-  background: var(--light-cyan-table);
-  color: var(--dark-cyan);
-  height: fit-content;
-  cursor: pointer;
-`;
-
 export const Index = () => {
   return (
     <AppContainer>
@@ -180,30 +57,7 @@ export const Index = () => {
         {Array(10)
           .fill(true)
           .map((_, i) => (
-            <JobPost key={i} className="featured">
-              <JobDetails>
-                <Logo src={jobLogo} />
-                <header>
-                  <CompanyName>Loop Studios</CompanyName>
-                  <NewTag />
-                  <FeaturedTag />
-                </header>
-                <Title>Software Engineer</Title>
-                <footer>
-                  <span>1d ago</span>
-                  <span>Full Time</span>
-                  <span>USA only</span>
-                </footer>
-              </JobDetails>
-              <JobFilters>
-                <FilterTags>JavaScript</FilterTags>
-                <FilterTags>JavaScript</FilterTags>
-                <FilterTags>css</FilterTags>
-                <FilterTags>JavaScript</FilterTags>
-                <FilterTags>bf</FilterTags>
-                <FilterTags>JavaScript</FilterTags>
-              </JobFilters>
-            </JobPost>
+            <JobPost key={i} post={jobPost} />
           ))}
       </Main>
     </AppContainer>
