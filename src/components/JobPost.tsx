@@ -14,7 +14,7 @@ const JobPostDiv = styled.div`
   --separator: 1px;
   --first-div-width: 100%;
   border-radius: 5px;
-  box-shadow: 3px 5px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.1);
 
   > :first-of-type {
     max-width: var(--first-div-width);
