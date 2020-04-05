@@ -36,10 +36,12 @@ const JobPost = styled.div`
   flex-wrap: wrap;
   --job-item-width: 100%;
   --separator: 1px;
+  --first-div-width: 100%;
   border-radius: 5px;
   box-shadow: 3px 5px 25px rgba(0, 0, 0, 0.2);
 
-  > :first-child {
+  > :first-of-type {
+    max-width: var(--first-div-width);
     border-bottom: var(--separator) solid var(--gray);
   }
 
@@ -54,6 +56,7 @@ const JobPost = styled.div`
   @media (min-width: 600px) {
     --job-item-width: 50%;
     --separator: 0px;
+    --first-div-width: max-content;
   }
 `;
 
@@ -78,7 +81,7 @@ const JobDetails = styled.div`
     font-weight: 300;
     margin-bottom: 20px;
 
-    > span:not(:first-child)::before {
+    > span:not(:first-of-type)::before {
       content: "•";
       display: inline-block;
       margin: auto 10px;
@@ -87,7 +90,20 @@ const JobDetails = styled.div`
   }
 `;
 
-const JobTags = styled.div``;
+const JobFilters = styled.div`
+  margin: 10px auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+
+  > * {
+    margin: 5px;
+  }
+
+  @media (min-width: 600px) {
+    justify-content: flex-end;
+  }
+`;
 
 const Logo = styled.img`
   width: 50px;
@@ -116,6 +132,7 @@ const Tag = styled.span`
 
   &:not(:last-child) {
     margin-right: 10px;
+    margin-bottom: 10px;
   }
 `;
 
@@ -131,6 +148,18 @@ const FeaturedTag = styled(Tag)`
   ::after {
     content: "featured";
   }
+`;
+
+const FilterTags = styled.span`
+  display: inline-block;
+  padding: 10px;
+  border-radius: 5px;
+  line-height: 20px;
+  font-size: smaller;
+  background: var(--light-cyan-table);
+  color: var(--dark-cyan);
+  height: fit-content;
+  cursor: pointer;
 `;
 
 export const Index = () => {
@@ -158,7 +187,14 @@ export const Index = () => {
               <span>USA only</span>
             </footer>
           </JobDetails>
-          <JobTags></JobTags>
+          <JobFilters>
+            <FilterTags>JavaScript</FilterTags>
+            <FilterTags>JavaScript</FilterTags>
+            <FilterTags>css</FilterTags>
+            <FilterTags>JavaScript</FilterTags>
+            <FilterTags>bf</FilterTags>
+            <FilterTags>JavaScript</FilterTags>
+          </JobFilters>
         </JobPost>
       </Main>
     </AppContainer>
