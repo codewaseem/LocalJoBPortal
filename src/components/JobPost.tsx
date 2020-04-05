@@ -5,16 +5,11 @@ const JobPostDiv = styled.div`
   display: flex;
   position: relative;
   min-height: 175px;
-  max-width: 960px;
-  margin: auto;
-  background: white;
-  padding: 25px;
+
   flex-wrap: wrap;
   --job-item-width: 100%;
   --separator: 1px;
   --first-div-width: 100%;
-  border-radius: 5px;
-  box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.1);
 
   > :first-of-type {
     max-width: var(--first-div-width);
@@ -36,7 +31,10 @@ const JobPostDiv = styled.div`
   }
 `;
 
-const JobDetails = styled.div`
+const JobDetails = styled.a`
+  text-decoration: none;
+  border: 0;
+  background: white;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -127,7 +125,8 @@ const FeaturedTag = styled(Tag)`
   }
 `;
 
-const FilterTag = styled.span`
+const FilterTag = styled.button`
+  border: 0;
   display: inline-block;
   padding: 10px;
   border-radius: 5px;
@@ -137,6 +136,7 @@ const FilterTag = styled.span`
   color: var(--dark-cyan);
   height: fit-content;
   cursor: pointer;
+  font-weight: bold;
 `;
 
 type Post = {
@@ -154,14 +154,14 @@ type Post = {
 
 export type JobPostProps = React.AllHTMLAttributes<any> & {
   post: Post;
-  onOpenClick?: () => {} | any;
-  onFilterClick?: () => {} | any;
+  onOpenClick?: (post: Post) => {};
+  onFilterClick?: (keyword: string) => {};
 };
 
 const JobPost: React.FC<JobPostProps> = ({
   post,
-  onOpenClick,
-  onFilterClick,
+  onOpenClick = () => {},
+  onFilterClick = () => {},
 }) => {
   return (
     <JobPostDiv key={post.id} className={post.featured ? "featured" : ""}>
@@ -169,8 +169,10 @@ const JobPost: React.FC<JobPostProps> = ({
         onClick={() => {
           onOpenClick(post);
         }}
+        href=""
+        aria-label={`JOB ${post.jobTitle} at the company named ${post.companyName}. Click for more details`}
       >
-        <Logo src={post.companyLogo} />
+        <Logo src={post.companyLogo} alt="" />
         <header>
           <CompanyName>{post.companyName}</CompanyName>
           {post.new && <NewTag />}
@@ -185,7 +187,12 @@ const JobPost: React.FC<JobPostProps> = ({
       </JobDetails>
       <JobFilters>
         {post.keywords.map((keyword: string) => (
-          <FilterTag onClick={() => onFilterClick(keyword)} key={keyword}>
+          <FilterTag
+            aria-label={`Filter jobs by ${keyword}`}
+            title={`Filter jobs by ${keyword}`}
+            onClick={() => onFilterClick(keyword)}
+            key={keyword}
+          >
             {keyword}
           </FilterTag>
         ))}

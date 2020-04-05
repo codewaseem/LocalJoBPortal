@@ -3,7 +3,6 @@
 html,
 body {
   min-height: 100vh;
-  font-family: "Rubik";
   font-size: 15px;
   font-family: "Spartan", sans-serif;
 
@@ -14,6 +13,11 @@ body {
   --very-dark-gray-cyan: hsl(180, 14%, 20%);
 
   --gray: rgb(200, 200, 200);
+}
+
+button {
+  font-size: 15px;
+  font-family: "Spartan", sans-serif;
 }
 
 * {
