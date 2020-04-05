@@ -25,6 +25,9 @@ const HeaderImage = styled.img`
 const Main = styled.main`
   padding: 50px 20px;
   flex: 1;
+  > :not(:last-of-type) {
+    margin-bottom: 45px;
+  }
 `;
 
 const JobPost = styled.div`
@@ -174,30 +177,34 @@ export const Index = () => {
         </picture>
       </Header>
       <Main>
-        <JobPost className="featured">
-          <JobDetails>
-            <Logo src={jobLogo} />
-            <header>
-              <CompanyName>Loop Studios</CompanyName>
-              <NewTag />
-              <FeaturedTag />
-            </header>
-            <Title>Software Engineer</Title>
-            <footer>
-              <span>1d ago</span>
-              <span>Full Time</span>
-              <span>USA only</span>
-            </footer>
-          </JobDetails>
-          <JobFilters>
-            <FilterTags>JavaScript</FilterTags>
-            <FilterTags>JavaScript</FilterTags>
-            <FilterTags>css</FilterTags>
-            <FilterTags>JavaScript</FilterTags>
-            <FilterTags>bf</FilterTags>
-            <FilterTags>JavaScript</FilterTags>
-          </JobFilters>
-        </JobPost>
+        {Array(10)
+          .fill(true)
+          .map((_, i) => (
+            <JobPost key={i} className="featured">
+              <JobDetails>
+                <Logo src={jobLogo} />
+                <header>
+                  <CompanyName>Loop Studios</CompanyName>
+                  <NewTag />
+                  <FeaturedTag />
+                </header>
+                <Title>Software Engineer</Title>
+                <footer>
+                  <span>1d ago</span>
+                  <span>Full Time</span>
+                  <span>USA only</span>
+                </footer>
+              </JobDetails>
+              <JobFilters>
+                <FilterTags>JavaScript</FilterTags>
+                <FilterTags>JavaScript</FilterTags>
+                <FilterTags>css</FilterTags>
+                <FilterTags>JavaScript</FilterTags>
+                <FilterTags>bf</FilterTags>
+                <FilterTags>JavaScript</FilterTags>
+              </JobFilters>
+            </JobPost>
+          ))}
       </Main>
     </AppContainer>
   );
