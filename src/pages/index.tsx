@@ -31,6 +31,8 @@ const JobPost = styled.div`
   display: flex;
   position: relative;
   min-height: 175px;
+  max-width: 960px;
+  margin: auto;
   background: white;
   padding: 25px;
   flex-wrap: wrap;
