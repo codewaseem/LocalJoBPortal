@@ -16,6 +16,12 @@ const Container = styled.div`
     font-size: medium;
     font-weight: 400;
     margin: 10px;
+    cursor: pointer;
+    &:hover,
+    &:focus {
+      color: var(--dark-cyan);
+      text-decoration: underline;
+    }
   }
   > .filters {
     flex: 1;
@@ -42,6 +48,10 @@ const Container = styled.div`
         font-size: x-large;
         border-radius: 0 5px 5px 0;
         cursor: pointer;
+        &:hover,
+        &:focus {
+          background: var(--very-dark-gray-cyan);
+        }
       }
     }
   }

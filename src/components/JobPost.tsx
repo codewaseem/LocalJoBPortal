@@ -11,9 +11,14 @@ const JobPostDiv = styled.div`
   --separator: 1px;
   --first-div-width: 100%;
 
-  > a {
+  > .job-details {
     max-width: var(--first-div-width);
     border-bottom: var(--separator) solid var(--gray);
+
+    &:hover .job-title,
+    &:focus .job-title {
+      color: var(--dark-cyan);
+    }
   }
 
   &.featured {
@@ -137,6 +142,12 @@ const FilterTag = styled.button`
   height: fit-content;
   cursor: pointer;
   font-weight: bold;
+
+  &:hover,
+  &:focus {
+    background: var(--dark-cyan);
+    color: white;
+  }
 `;
 
 type Post = {
@@ -166,6 +177,7 @@ const JobPost: React.FC<JobPostProps> = ({
   return (
     <JobPostDiv key={post.id} className={post.featured ? "featured" : ""}>
       <JobDetails
+        className="job-details"
         onClick={() => {
           onOpenClick(post);
         }}
@@ -178,7 +190,7 @@ const JobPost: React.FC<JobPostProps> = ({
           {post.new && <NewTag />}
           {post.featured && <FeaturedTag />}
         </header>
-        <Title>{post.jobTitle}</Title>
+        <Title className="job-title">{post.jobTitle}</Title>
         <footer>
           <span>{post.postedOn}</span>
           <span>{post.workingHours}</span>
