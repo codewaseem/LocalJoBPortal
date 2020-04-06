@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import styled from "@emotion/styled";
 import bgImage from "../images/bg-header-mobile.svg";
@@ -7,18 +7,155 @@ import jobLogo from "../images/insure.svg";
 import JobPost, { JobPostProps } from "../components/JobPost";
 import AppliedFilters from "../components/AppliedFilters";
 
-const jobPost = {
-  companyName: "Loop Studios",
-  id: "id",
-  companyLogo: jobLogo,
-  jobTitle: "Software Engineer",
-  postedOn: "1d ago",
-  workingHours: "Full Time",
-  jobLocation: "USA only",
-  keywords: ["JavaScript", "CSS", "HTML", "TypeScript"],
-  featured: true,
-  new: true,
-};
+const jobs = [
+  {
+    id: 1,
+    company: "Photosnap",
+    logo: "./images/photosnap.svg",
+    new: true,
+    featured: true,
+    position: "Senior Frontend Developer",
+    role: "Frontend",
+    level: "Senior",
+    postedAt: "1d ago",
+    contract: "Full Time",
+    location: "USA Only",
+    languages: ["HTML", "CSS", "JavaScript"],
+  },
+  {
+    id: 2,
+    company: "Manage",
+    logo: "./images/manage.svg",
+    new: true,
+    featured: true,
+    position: "Fullstack Developer",
+    role: "Fullstack",
+    level: "Midweight",
+    postedAt: "1d ago",
+    contract: "Part Time",
+    location: "Remote",
+    languages: ["Python"],
+    tools: ["React"],
+  },
+  {
+    id: 3,
+    company: "Account",
+    logo: "./images/account.svg",
+    new: true,
+    featured: false,
+    position: "Junior Frontend Developer",
+    role: "Frontend",
+    level: "Junior",
+    postedAt: "2d ago",
+    contract: "Part Time",
+    location: "USA Only",
+    languages: ["JavaScript"],
+    tools: ["React", "Sass"],
+  },
+  {
+    id: 4,
+    company: "MyHome",
+    logo: "./images/myhome.svg",
+    new: false,
+    featured: false,
+    position: "Junior Frontend Developer",
+    role: "Frontend",
+    level: "Junior",
+    postedAt: "5d ago",
+    contract: "Contract",
+    location: "USA Only",
+    languages: ["CSS", "JavaScript"],
+  },
+  {
+    id: 5,
+    company: "Loop Studios",
+    logo: "./images/loop-studios.svg",
+    new: false,
+    featured: false,
+    position: "Software Engineer",
+    role: "FullStack",
+    level: "Midweight",
+    postedAt: "1w ago",
+    contract: "Full Time",
+    location: "Worldwide",
+    languages: ["JavaScript"],
+    tools: ["Ruby", "Sass"],
+  },
+  {
+    id: 6,
+    company: "FaceIt",
+    logo: "./images/faceit.svg",
+    new: false,
+    featured: false,
+    position: "Junior Backend Developer",
+    role: "Backend",
+    level: "Junior",
+    postedAt: "2w ago",
+    contract: "Full Time",
+    location: "UK Only",
+    tools: ["RoR"],
+  },
+  {
+    id: 7,
+    company: "Shortly",
+    logo: "./images/shortly.svg",
+    new: false,
+    featured: false,
+    position: "Junior Developer",
+    role: "Frontend",
+    level: "Junior",
+    postedAt: "2w ago",
+    contract: "Full Time",
+    location: "Worldwide",
+    languages: ["HTML", "JavaScript"],
+    tools: ["Sass"],
+  },
+  {
+    id: 8,
+    company: "Insure",
+    logo: "./images/insure.svg",
+    new: false,
+    featured: false,
+    position: "Junior Frontend Developer",
+    role: "Frontend",
+    level: "Junior",
+    postedAt: "2w ago",
+    contract: "Full Time",
+    location: "USA Only",
+    languages: ["JavaScript"],
+    tools: ["Vue, Sass"],
+  },
+  {
+    id: 9,
+    company: "Eyecam Co.",
+    logo: "./images/eyecam-co.svg",
+    new: false,
+    featured: false,
+    position: "Full Stack Engineer",
+    role: "Fullstack",
+    level: "Midweight",
+    postedAt: "3w ago",
+    contract: "Full Time",
+    location: "Worldwide",
+    languages: ["JavaScript", "Python"],
+    tools: ["Django"],
+  },
+  {
+    id: 10,
+    company: "The Air Filter Company",
+    logo: "./images/the-air-filter-company.svg",
+    new: false,
+    featured: false,
+    position: "Front-end Dev",
+    role: "Frontend",
+    level: "Junior",
+    postedAt: "1mo ago",
+    contract: "Part Time",
+    location: "Worldwide",
+    languages: ["JavaScript"],
+    tools: ["React", "Sass"],
+  },
+];
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -40,23 +177,23 @@ const HeaderImage = styled.img`
 const Main = styled.main`
   padding: 50px 20px;
   padding-top: 0px;
+  position: relative;
+  max-width: 960px;
+  margin: auto;
+  width: 100%;
 
   flex: 1;
   > * {
-    max-width: 960px;
-    margin: auto;
-    width: 100%;
     background: white;
     padding: 25px;
     border-radius: 5px;
     box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.1);
   }
-  position: relative;
   > :not(:last-of-type) {
     margin-bottom: 45px;
   }
 
-  > :nth-of-type(1) {
+  > .filters-section {
     position: relative;
     z-index: 99;
     top: 0;
@@ -70,6 +207,8 @@ const Main = styled.main`
 `;
 
 export const Index = () => {
+  const [filters, setFilters] = useState<string[]>([]);
+
   return (
     <AppContainer>
       <Header>
@@ -80,15 +219,49 @@ export const Index = () => {
         </picture>
       </Header>
       <Main>
-        <AppliedFilters />
-        {Array(10)
-          .fill(true)
-          .map((_, i) => (
+        {filters.length > 0 && (
+          <AppliedFilters
+            className="filters-section"
+            filters={filters}
+            onClearAll={() => setFilters([])}
+            onClearFilter={(filter) => {
+              let index = filters.indexOf(filter);
+              setFilters([
+                ...filters.slice(0, index),
+                ...filters.slice(index + 1),
+              ]);
+            }}
+          />
+        )}
+        {jobs
+          .filter((job) => {
+            let keywords = [...(job.tools || []), ...(job.languages || [])];
+            if (filters.length == 0) return true;
+            let select = false;
+            keywords.forEach((keyword) => {
+              if (filters.includes(keyword)) {
+                select = true;
+              }
+            });
+            return select;
+          })
+          .map((jobPost, i) => (
             <JobPost
-              onFilterClick={console.log}
+              style={{
+                marginTop: i == 0 ? "45px" : "0",
+              }}
+              onFilterClick={(filter) =>
+                setFilters(Array.from(new Set(filters).add(filter)))
+              }
               onOpenClick={console.log}
               key={i}
-              post={jobPost}
+              post={{
+                ...jobPost,
+                keywords: [
+                  ...(jobPost.languages || []),
+                  ...(jobPost.tools || []),
+                ],
+              }}
             />
           ))}
       </Main>

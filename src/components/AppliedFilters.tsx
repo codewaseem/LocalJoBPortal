@@ -57,23 +57,41 @@ const Container = styled.div`
   }
 `;
 
-const AppliedFilters = () => {
+type Props = React.AllHTMLAttributes<any> & {
+  filters: string[];
+  onClearAll: () => void;
+  onClearFilter: (filter: string) => void;
+};
+
+const AppliedFilters: React.FC<Props> = ({
+  filters,
+  onClearAll,
+  onClearFilter,
+  ...props
+}) => {
   return (
-    <Container>
+    <Container className={props.className}>
       <div className="filters">
         <h2 className="sr-only">Currently applied filters are.</h2>
 
-        <div className="filter">
-          <span aria-label={`Frontend.`}>Frontend</span>
-          <button aria-label={`Clear frontend filter.`} title={`Clear filter`}>
-            ✕
-          </button>
-        </div>
+        {filters.map((filter) => (
+          <div key={filter} className="filter">
+            <span aria-label={`${filter}.`}>{filter}</span>
+            <button
+              aria-label={`Clear ${filter} filter.`}
+              title={`Clear filter`}
+              onClick={() => onClearFilter(filter)}
+            >
+              ✕
+            </button>
+          </div>
+        ))}
       </div>
       <button
         aria-label="Clear all filters."
         title={`Clear all filters`}
         className="clear"
+        onClick={onClearAll}
       >
         Clear
       </button>

@@ -151,13 +151,15 @@ const FilterTag = styled.button`
 `;
 
 type Post = {
-  companyName: string;
-  id: string | number;
-  companyLogo: any;
-  jobTitle: string;
-  postedOn: string;
-  workingHours: string;
-  jobLocation: string;
+  id: number;
+  company: string;
+  logo: string;
+  position: string;
+  role: string;
+  level: string;
+  postedAt: string;
+  contract: string;
+  location: string;
   keywords: string[];
   featured: boolean;
   new: boolean;
@@ -165,36 +167,41 @@ type Post = {
 
 export type JobPostProps = React.AllHTMLAttributes<any> & {
   post: Post;
-  onOpenClick?: (post: Post) => {};
-  onFilterClick?: (keyword: string) => {};
+  onOpenClick?: (post: Post) => void;
+  onFilterClick?: (keyword: string) => void;
 };
 
 const JobPost: React.FC<JobPostProps> = ({
   post,
   onOpenClick = () => {},
   onFilterClick = () => {},
+  ...props
 }) => {
   return (
-    <JobPostDiv key={post.id} className={post.featured ? "featured" : ""}>
+    <JobPostDiv
+      {...props}
+      key={post.id}
+      className={post.featured ? "featured" : ""}
+    >
       <JobDetails
         className="job-details"
         onClick={() => {
           onOpenClick(post);
         }}
         href=""
-        aria-label={`JOB ${post.jobTitle} at the company named ${post.companyName}. Click for more details`}
+        aria-label={`JOB ${post.role} at the company named ${post.company}. Click for more details`}
       >
-        <Logo src={post.companyLogo} alt="" />
+        <Logo src={post.logo} alt="" />
         <header>
-          <CompanyName>{post.companyName}</CompanyName>
+          <CompanyName>{post.company}</CompanyName>
           {post.new && <NewTag />}
           {post.featured && <FeaturedTag />}
         </header>
-        <Title className="job-title">{post.jobTitle}</Title>
+        <Title className="job-title">{post.role}</Title>
         <footer>
-          <span>{post.postedOn}</span>
-          <span>{post.workingHours}</span>
-          <span>{post.jobLocation}</span>
+          <span>{post.postedAt}</span>
+          <span>{post.contract}</span>
+          <span>{post.location}</span>
         </footer>
       </JobDetails>
       <JobFilters>
