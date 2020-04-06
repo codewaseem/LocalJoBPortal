@@ -5,6 +5,7 @@ import bgImage from "../images/bg-header-mobile.svg";
 import bgImageDesktop from "../images/bg-header-desktop.svg";
 import JobPost from "../components/JobPost";
 import AppliedFilters from "../components/AppliedFilters";
+import SEO from "../components/Seo";
 
 const jobs = [
   {
@@ -210,6 +211,7 @@ export const Index = () => {
 
   return (
     <AppContainer>
+      <SEO />
       <Header>
         <h1 className="sr-only">Job Portal Website.</h1>
         <picture>

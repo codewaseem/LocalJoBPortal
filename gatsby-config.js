@@ -40,7 +40,7 @@ if (process.env.NODE_ENV == "production") {
     {
       resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {
-        siteUrl: `https://frontend-showcase.codewaseem.tech`,
+        siteUrl: `https://happy-yonath-9b6d4f.netlify.com/`,
       },
     },
     {
