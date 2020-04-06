@@ -5,6 +5,7 @@ const JobPostDiv = styled.div`
   display: flex;
   position: relative;
   min-height: 175px;
+  padding: 20px;
 
   flex-wrap: wrap;
   --job-item-width: 100%;
@@ -45,17 +46,29 @@ const JobDetails = styled.a`
   justify-content: space-evenly;
   cursor: pointer;
 
+  @media (min-width: 600px) {
+    flex-direction: row;
+    align-items: center;
+
+    img {
+      width: 75px;
+      height: 75px;
+      margin-right: 15px;
+    }
+  }
+
   header {
     color: var(--dark-cyan);
     font-size: 14px;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 15px;
   }
 
-  > * {
-    margin: 10px 0px;
+  > div > * {
+    margin: 7px 0px;
   }
-  > footer {
+
+  footer {
     color: hsl(180, 8%, 52%);
     font-size: 14px;
     font-weight: 300;
@@ -86,9 +99,11 @@ const JobFilters = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 50px;
-  position: absolute;
-  top: -25px;
+  @media (max-width: 599px) {
+    width: 50px;
+    position: absolute;
+    top: -25px;
+  }
 `;
 
 const CompanyName = styled.span`
@@ -192,17 +207,19 @@ const JobPost: React.FC<JobPostProps> = ({
         aria-label={`JOB ${post.role} at the company named ${post.company}. Click for more details`}
       >
         <Logo src={post.logo} alt="" />
-        <header>
-          <CompanyName>{post.company}</CompanyName>
-          {post.new && <NewTag />}
-          {post.featured && <FeaturedTag />}
-        </header>
-        <Title className="job-title">{post.role}</Title>
-        <footer>
-          <span>{post.postedAt}</span>
-          <span>{post.contract}</span>
-          <span>{post.location}</span>
-        </footer>
+        <div>
+          <header>
+            <CompanyName>{post.company}</CompanyName>
+            {post.new && <NewTag />}
+            {post.featured && <FeaturedTag />}
+          </header>
+          <Title className="job-title">{post.role}</Title>
+          <footer>
+            <span>{post.postedAt}</span>
+            <span>{post.contract}</span>
+            <span>{post.location}</span>
+          </footer>
+        </div>
       </JobDetails>
       <JobFilters>
         {post.keywords.map((keyword: string) => (

@@ -61,11 +61,12 @@ if (process.env.NODE_ENV == "production") {
 
 module.exports = {
   siteMetadata: {
-    title: "Site title",
-    description: "site description",
-    keywords: "keywords, here",
-    image: "/images/social.jpg",
-    siteUrl: "localhost:3000/",
+    title: "Job Listing",
+    description: "Job Listing Challenge from frontendmentor.io",
+    keywords:
+      "Gatsby, Frontend, Fullstack, HTML5, CSS3, JavaScript, React, Waseem Ahmed",
+    siteUrl: "https://happy-yonath-9b6d4f.netlify.com/",
+    lang: "en",
   },
   plugins: [...basePlugins, ...productionPlugins],
 };

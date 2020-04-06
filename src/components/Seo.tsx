@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useStaticQuery, graphql } from "gatsby";
 import FavIcon from "../images/favicon-32x32.png";
+import SeoTwitterImage from "../../designs/desktop-preview.jpg";
 
 type Props = {
   title?: string;
@@ -14,13 +15,7 @@ type Props = {
   };
 };
 
-const SEO: React.FC<Props> = ({
-  title,
-  description,
-  lang,
-  pathname,
-  image,
-}) => {
+const SEO: React.FC<Props> = ({ title, description }) => {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -29,22 +24,18 @@ const SEO: React.FC<Props> = ({
             title
             description
             keywords
-            image
             siteUrl
+            lang
           }
         }
       }
     `
   );
 
-  const defaultImage = `${site.siteMetadata.siteUrl}${site.siteMetadata.image}`;
-  const metaImage =
-    image && image.src
-      ? `${site.siteMetadata.siteUrl}${image.src}`
-      : defaultImage;
-  const metaImageAlt = image && image.alt ? image.alt : title;
   const metaDescription = description || site.siteMetadata.description;
-  const metaURL = `${site.siteMetadata.siteUrl}${pathname}`;
+  const lang = site?.siteMetadata?.lang || "en";
+  const url =
+    site?.siteMetadata?.siteUrl || "http://happy-yonath-9b6d4f.netlify.com/";
 
   return (
     <Helmet
@@ -67,7 +58,7 @@ const SEO: React.FC<Props> = ({
         },
         {
           property: "og:url",
-          content: metaURL,
+          content: url,
         },
         {
           property: "og:description",
@@ -79,11 +70,11 @@ const SEO: React.FC<Props> = ({
         },
         {
           property: "og:image",
-          content: metaImage,
+          content: SeoTwitterImage,
         },
         {
           property: "og:image:alt",
-          content: metaImageAlt,
+          content: SeoTwitterImage,
         },
         {
           name: "twitter:card",
