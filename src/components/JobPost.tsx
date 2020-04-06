@@ -11,7 +11,7 @@ const JobPostDiv = styled.div`
   --separator: 1px;
   --first-div-width: 100%;
 
-  > :first-of-type {
+  > a {
     max-width: var(--first-div-width);
     border-bottom: var(--separator) solid var(--gray);
   }
